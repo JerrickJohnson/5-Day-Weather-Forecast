@@ -8,7 +8,7 @@ Below the current conditions the user is presented with a 5 day forecast that di
 
 The following image demonstrates the web application's appearance and functionality:
 
-![Screenshot 5 Day Forecast](./Assets/images/5dayforecastScreen.PNG)
+![Screenshot 5 Day Forecast](./assets/images/5dayforecastScreen.PNG)
 
 
 ## The URL of the deployed application:

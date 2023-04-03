@@ -113,7 +113,7 @@ let getWeatherByCityName = async (city) => {
 
     forecastItem.querySelector(".weatherForecastDay").textContent = dayjs()
       .add(i, "days")
-      .format("ddd");
+      .format("MMMM DD YYYY");
     forecastItem.querySelector(
       ".weatherForecastTemperature .value"
     ).textContent = forecastTemperatureFahrenheit.toFixed(0);

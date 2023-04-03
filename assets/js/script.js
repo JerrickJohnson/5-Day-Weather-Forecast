@@ -13,7 +13,62 @@ let fcIcon = document.querySelector('.weatherForecastIcon');
 let weatherAPIkey = 'e49f15e6d04d892dd8c400c87894b77a';
 let weatherBaseEndpoint = 'https://api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}';
 
+let searchHistory = [];
+
+// Render the search history list
+function renderSearchHistory() {
+    const list = document.getElementById('searchHistoryList');
+    list.innerHTML = '';
+    for (let i = 0; i < searchHistory.length; i++) {
+      const li = document.createElement('li');
+      const cityName = searchHistory[i];
+      li.textContent = cityName;
+      li.addEventListener('click', () => {
+        getWeatherByCityName(cityName);
+      });
+      list.appendChild(li);
+    }
+  }
+
+// Save the search history to local storage
+function saveSearchHistory() {
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+}
+
+// Load the search history from local storage
+function loadSearchHistory() {
+    const history = localStorage.getItem('searchHistory');
+    if (history) {
+        searchHistory = JSON.parse(history);
+        renderSearchHistory();
+    }
+}
+
+loadSearchHistory();
+
+async function searchCity(city) {
+    const endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherAPIkey}`;
+    const response = await fetch(endpoint);
+    if (response.status === 404) {
+      alert('Invalid city name. Please enter a valid city name.');
+      return;
+    }
+    getWeatherByCityName(city);
+  }
+
 let getWeatherByCityName = async (city) => {
+
+    // Capitalize the first letter of the city name and convert the rest of the letters to lowercase
+    city = city.split(' ').map(word => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      }).join(' ');
+
+    if (!searchHistory.includes(city)) {
+        searchHistory.push(city);
+        saveSearchHistory();
+        renderSearchHistory();
+      }
+
     let endpoint = weatherBaseEndpoint.replace('{city name}', city).replace('{API key}', weatherAPIkey);
     let response = await fetch(endpoint);
     let weatherData = await response.json();
@@ -55,4 +110,13 @@ let getWeatherByCityName = async (city) => {
     }
 }
 
-getWeatherByCityName('New York');
+// getWeatherByCityName('New York');
+
+let searchForm = document.querySelector('#search');
+let searchInput = document.querySelector('#query');
+
+searchForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const city = searchInput.value.toLowerCase();
+    searchCity(city);
+  });

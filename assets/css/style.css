@@ -32,7 +32,7 @@ img {
     border-bottom-left-radius: 5px;
     padding: 0 15px;
     font-size: 14px;
-    color: black;
+    color: white;
 }
 
 .search input:focus {
@@ -121,7 +121,7 @@ img {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     margin: 0 10px 10px;
-    border: 1px solid black;
+    border: 1px solid white;
     padding: 10px;
 }
 
@@ -134,3 +134,21 @@ img {
     background-color: rgb(25, 25, 148);
     color: #fff;
 }
+
+h4 {
+    color: white;
+}
+
+#searchHistoryList li {
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px 0;
+    color: black;
+    background-color: rgb(243, 239, 239);
+  }
+
+  #searchHistoryList li:hover {
+    cursor: pointer;
+    background-color: aquamarine;
+  }
+
